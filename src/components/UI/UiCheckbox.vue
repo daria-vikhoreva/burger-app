@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="checkbox" class="checkbox">
+        <input type="checkbox" id="checkbox" class="checkbox">
         <label for="checkbox"></label>
     </div>
 </template>

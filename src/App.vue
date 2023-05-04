@@ -3,8 +3,8 @@
         <CardItem/>
         <UiButton/>
         <UiInput/>
-        <UiCheckbox/>
         <UiMultipleSelect/>
+        <UiCheckbox/>
     </div>
 </template>
 
