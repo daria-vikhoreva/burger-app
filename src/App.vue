@@ -1,28 +1,24 @@
 <template>
-    <div class="wrapper">
-        <CardItem/>
-        <UiButton/>
+    <div class="mainpage__wrapper">
         <UiInput/>
-        <UiMultipleSelect/>
-        <UiCheckbox/>
+        <div class="mainpage__select-wrapper">
+          <UiMultipleSelect class="mainpage__select"/>
+        </div>
+        <CardList/>
     </div>
 </template>
 
 <script>
-import CardItem from './components/CardItem.vue';
-import UiButton from './components/UI/UiButton.vue';
 import UiInput from './components/UI/UiInput.vue';
-import UiCheckbox from './components/UI/UiCheckbox.vue';
 import UiMultipleSelect from './components/UI/UiMultipleSelect.vue';
+import CardList from './components/CardList.vue';
 
 export default {
   name: 'App',
   components: {
-    CardItem,
-    UiButton,
     UiInput,
-    UiCheckbox,
     UiMultipleSelect,
+    CardList,
   }
 }
 </script>
@@ -50,21 +46,38 @@ export default {
   font-weight: 400;
 }
 
-.wrapper {
+#app {
+  font-family: "Avenir", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  max-width: 375px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 24px 0 24px;
+  
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.mainpage__wrapper {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-#app {
-  font-family: "Avenir", sans-serif;
-  margin-top: 60px;
-  font-size: 12px;
-  font-weight: 400;
-  margin-left: 60px;
+.mainpage__select-wrapper {
+  position: relative; 
+  height: 35px; 
 }
 
-* {
-  box-sizing: border-box;
+.mainpage__select {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 </style>
