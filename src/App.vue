@@ -1,10 +1,15 @@
 <template>
-    <div class="mainpage__wrapper">
-        <UiInput/>
-        <div class="mainpage__select-wrapper">
-          <UiMultipleSelect class="mainpage__select"/>
+    <div class="wrapper">
+        <div class="mainpage">
+            <UiInput/>
+            <div class="mainpage__select-wrapper">
+                <UiMultipleSelect class="mainpage__select"/>
+            </div>
+            <CardList/>
         </div>
-        <CardList/>
+        <div class="detail-recipe">
+            <DetailCard/>
+        </div>
     </div>
 </template>
 
@@ -13,12 +18,16 @@ import UiInput from './components/UI/UiInput.vue';
 import UiMultipleSelect from './components/UI/UiMultipleSelect.vue';
 import CardList from './components/CardList.vue';
 
+import DetailCard from './components/DetailCard.vue';
+
 export default {
   name: 'App',
   components: {
     UiInput,
     UiMultipleSelect,
     CardList,
+
+    DetailCard
   }
 }
 </script>
@@ -61,7 +70,13 @@ export default {
   box-sizing: border-box;
 }
 
-.mainpage__wrapper {
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.mainpage {
   display: flex;
   flex-direction: column;
   gap: 20px;
