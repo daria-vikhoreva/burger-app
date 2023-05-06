@@ -1,17 +1,24 @@
 <template>
-    <div>
-        <select name="categories" :size="size" multiple :value="getValue">
-            <option value="" @click="clickSelect" disabled selected>{{ getValue }}</option>
-            <option 
-                v-for="(option, index) in options" 
-                :key="index" 
-                :value="option.value" 
-                @click="clickOption(option)"
+    <div class="select">
+        <div
+        class="select__placeholder" 
+        @click="clickSelect">
+            {{ getValue }}
+        </div>
+        <div 
+        class="select__option-list"
+        :class="{ open: isOpen }">
+            <div 
+            v-for="(option, index) in options" 
+            :key="index" 
+            :value="option.value"
+            class="select__option"
+            :class="{ selected: this.selectedCategories.includes(option) }"
+            @click="clickOption(option)"
             >
                 {{ option.name }}
-            </option>
-            
-        </select> 
+            </div>
+        </div>
     </div>
 </template>
 
@@ -20,7 +27,7 @@
         name: 'UiMultipleSelect',
         data() {
             return {
-                size: 1,
+                isOpen: false,
                 defaultValue: 'Pick categories',
                 selectedCategories: [],
                 options: [
@@ -33,7 +40,7 @@
         },
         methods: {
             clickSelect() {
-                this.size = this.size === 1 ? this.options.length : 1;
+                this.isOpen = !this.isOpen;    
             },
             clickOption(option) {
                 if (this.selectedCategories.includes(option)) {
@@ -63,25 +70,42 @@
 
 <style scoped>
 
-select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-color: transparent;
-    border: none;
-    margin: 0;
+.select {
     max-width: 176px;
+    height: 36px;
     width: 100%;
-    overflow: hidden;
-    font-family: inherit;
-
-    border-radius: 7px;  
-    background: linear-gradient(98.81deg, #FFF0F0 -0.82%, #FFDFDF 101.53%);
-    mix-blend-mode: soft-light; 
 }
 
-select option {
+.select__placeholder {
+    border-radius: 7px;
+    background: linear-gradient(98.81deg, #FFF0F0 -0.82%, #FFDFDF 101.53%);
+    margin-bottom: 2px;
+    padding: 10px 12px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.select__option-list {
+    display: none;
+    border-radius: 7px;
+    overflow: hidden;
+    background: linear-gradient(98.81deg, #FFF0F0 -0.82%, #FFDFDF 101.53%);
+    mix-blend-mode: soft-light;
+}
+
+.select__option {
     padding: 10px 12px;
 }
 
+.select__option:hover {
+    background: linear-gradient(98.81deg, #ffdada -0.82%, #ffdddd 101.53%);
+}
+
+.select__option.selected {
+    background: linear-gradient(98.81deg, #fedada -0.82%, #ffcfcf 101.53%);
+}
+
+.select__option-list.open {
+    display: block;
+}
 </style>
