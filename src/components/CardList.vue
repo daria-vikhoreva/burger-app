@@ -4,7 +4,10 @@
 			v-for="card in cards"
 			:key="card.id"
 		>
-			<CardItem :card="card" />
+			<CardItem
+				:card="card"
+				@click-card="clickCard"
+			/>
 		</div>
 	</div>
 </template>
@@ -15,8 +18,14 @@ import CardItem from './CardItem.vue';
 export default {
 	name: 'CardList',
 	props: ['cards'],
+	emits: ['click-card'],
 	components: {
 		CardItem,
+	},
+	methods: {
+		clickCard(card) {
+			this.$emit('click-card', card);
+		},
 	},
 };
 </script>

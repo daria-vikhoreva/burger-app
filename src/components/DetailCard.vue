@@ -1,8 +1,14 @@
 <template>
 	<div>
 		<div class="detail-card">
-			<div class="detail-card__img">
-				<BackButton class="back-button" />
+			<div
+				:style="{ 'background-image': `url(${card.image})` }"
+				class="detail-card__img"
+			>
+				<BackButton
+					class="back-button"
+					@click="closeModal"
+				/>
 			</div>
 			<div class="detail-card__info">
 				<div class="detail-card__scroll-tool">
@@ -12,8 +18,7 @@
 					/>
 				</div>
 				<div class="detail-card__title">
-					Chicken Burger <br />
-					Promo Pack
+					{{ card.title }}
 				</div>
 				<div class="detail-card__rating">
 					<img
@@ -22,20 +27,10 @@
 					/>
 					<span> 4,8 Rating </span>
 				</div>
-				<div class="detail__card__descr">
-					Nulla occaecat velit laborum exercitation ullamco. Elit
-					labore eu aute elit nostrud culpa velit excepteur deserunt
-					sunt. Velit non est cillum consequat cupidatat ex Lorem
-					laboris labore aliqua ad duis eu laborum.
-					<ul>
-						<li>Chicken</li>
-						<li>Tomatoa</li>
-						<li>Lettuse</li>
-					</ul>
-					Nulla occaecat velit laborum exercitation ullamco. Elit
-					labore eu aute elit nostrud culpa velit excepteur deserunt
-					sunt.
-				</div>
+				<div
+					v-html="card.summary"
+					class="detail__card__descr"
+				/>
 			</div>
 		</div>
 	</div>
@@ -45,27 +40,37 @@
 import BackButton from './BackButton.vue';
 export default {
 	name: 'DetailCard',
+	props: ['card'],
+	emits: ['close-modal'],
 	components: {
 		BackButton,
+	},
+	methods: {
+		closeModal() {
+			this.$emit('close-modal');
+		},
 	},
 };
 </script>
 
 <style scoped>
+.detail-card {
+	background-color: rgba(237, 237, 237, 0.74);
+}
 .detail-card__img {
-	background-image: url('../assets/images/burger_1_detail.svg');
-	height: 440px;
+	height: 312px;
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: cover;
+	background-size: contain;
 	padding-top: 38px;
 	padding-left: 19px;
 }
 .detail-card__info {
 	padding: 19.5px 34px 15px 34px;
 	background: #ffffff;
-	border-radius: 12px;
-	margin-top: -70px;
+	border-top-left-radius: 14px;
+	border-top-right-radius: 14px;
+	margin-top: -50px;
 	z-index: 4;
 	position: relative;
 }

@@ -10,14 +10,20 @@
 				<UiMultipleSelect class="mainpage__select" />
 			</div>
 
-			<CardList :cards="cards" />
+			<CardList
+				:cards="cards"
+				@click-card="openModal"
+			/>
 		</div>
 
 		<div
 			v-if="isOpen"
 			class="detail-recipe"
 		>
-			<DetailCard />
+			<DetailCard
+				:card="detailCard"
+				@close-modal="closeModal"
+			/>
 		</div>
 
 		<div
@@ -53,22 +59,32 @@ export default {
 			loading: true,
 			errored: false,
 			isOpen: false,
-			currCard: null,
+			detailCard: {},
 		};
 	},
 	created() {
 		axios
 			.get(
-				'https://api.spoonacular.com/food/menuItems/search?apiKey=e78935cd64e44fceb543a63594c6ee5e&query=burger'
+				'https://api.spoonacular.com/recipes/complexSearch?apiKey=e78935cd64e44fceb543a63594c6ee5e&query=burger&addRecipeNutrition=true'
 			)
 			.then((response) => {
-				this.cards = response.data.menuItems;
+				this.cards = response.data.results;
 			})
 			.catch((error) => {
 				console.log(error);
 				this.errored = true;
 			})
 			.finally(() => (this.loading = false));
+	},
+	methods: {
+		openModal(card) {
+			this.isOpen = true;
+			this.detailCard = card;
+		},
+		closeModal() {
+			this.isOpen = false;
+			this.detailCard = {};
+		},
 	},
 };
 </script>

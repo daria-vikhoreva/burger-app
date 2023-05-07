@@ -15,7 +15,7 @@ export default {
 
 <style scoped>
 .back-button {
-	background-color: rgba(255, 0, 0, 0.2);
+	background: white;
 	border-radius: 7px;
 	padding: 14px 18px;
 	max-width: max-content;
