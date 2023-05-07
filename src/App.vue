@@ -80,7 +80,7 @@ export default {
 
 		const requests = queries.map((query) => {
 			return axios.get(
-				`https://api.spoonacular.com/recipes/complexSearch?apiKey=fd1ee00df7e644cf970befb05422538d&addRecipeNutrition=true&number=20&query=${query}`
+				`https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.VUE_APP_NOT_SECRET_CODE}&addRecipeNutrition=true&number=20&query=${query}`
 			);
 		});
 
@@ -120,7 +120,7 @@ export default {
 				(card) =>
 					// 1 вариант: если title содержит строку поиска && title содержит одну из выбранных категорий
 					// ||
-					// 2 вариант: если title содержит строку поиска && категории не выбраны 
+					// 2 вариант: если title содержит строку поиска && категории не выбраны
 					(card.title
 						.toLowerCase()
 						.includes(this.searchValue.toLowerCase()) &&
