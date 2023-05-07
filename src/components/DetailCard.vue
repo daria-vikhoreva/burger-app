@@ -20,12 +20,12 @@
 				<div class="detail-card__title">
 					{{ card.title }}
 				</div>
-				<div class="detail-card__rating">
+				<div class="detail-card__timer">
 					<img
-						src="../assets/images/star.svg"
-						alt="star"
+						src="../assets/images/timer.svg"
+						alt="timer"
 					/>
-					<span> 4,8 Rating </span>
+					<span> {{ card.readyInMinutes }} min </span>
 				</div>
 				<div
 					v-html="card.summary"
@@ -87,18 +87,18 @@ export default {
 	margin-bottom: 12px;
 }
 
-.detail-card__rating {
+.detail-card__timer {
 	display: flex;
 	align-items: center;
 	gap: 10px;
 	margin-bottom: 25px;
 }
 
-.detail-card__rating img {
-	height: 19px;
-	width: 19px;
+.detail-card__timer img {
+	width: 22px;
+	height: 22px;
 }
-.detail-card__rating span {
+.detail-card__timer span {
 	font-weight: 400;
 	font-size: 14px;
 	line-height: 19px;
