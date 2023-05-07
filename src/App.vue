@@ -4,14 +4,14 @@
 			v-if="!isOpen"
 			class="mainpage"
 		>
-			<UiInput />
+			<UiInput v-model="searchValue" />
 
 			<div class="mainpage__select-wrapper">
 				<UiMultipleSelect class="mainpage__select" />
 			</div>
 
 			<CardList
-				:cards="cards"
+				:cards="getFilteredCards"
 				@click-card="openModal"
 			/>
 		</div>
@@ -60,12 +60,13 @@ export default {
 			errored: false,
 			isOpen: false,
 			detailCard: {},
+			searchValue: '',
 		};
 	},
 	created() {
 		axios
 			.get(
-				'https://api.spoonacular.com/recipes/complexSearch?apiKey=e78935cd64e44fceb543a63594c6ee5e&query=burger&addRecipeNutrition=true'
+				'https://api.spoonacular.com/recipes/complexSearch?apiKey=d635120e94d84e19a0b28560f4f85391&query=burger&addRecipeNutrition=true'
 			)
 			.then((response) => {
 				this.cards = response.data.results;
@@ -84,6 +85,15 @@ export default {
 		closeModal() {
 			this.isOpen = false;
 			this.detailCard = {};
+		},
+	},
+	computed: {
+		getFilteredCards() {
+			return this.cards.filter((item) =>
+				item.title
+					.toLowerCase()
+					.includes(this.searchValue.toLowerCase())
+			);
 		},
 	},
 };

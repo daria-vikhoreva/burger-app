@@ -4,6 +4,8 @@
 			type="text"
 			class="input"
 			placeholder="Search"
+			:value="modelValue"
+			@input="$emit('update:modelValue', $event.target.value)"
 		/>
 	</div>
 </template>
@@ -11,6 +13,8 @@
 <script>
 export default {
 	name: 'UiInput',
+	props: ['modelValue'],
+	emits: ['update:modelValue'],
 };
 </script>
 

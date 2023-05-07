@@ -37,7 +37,10 @@
 				{{ Math.round(card.nutrition.nutrients[0].amount) }}
 				{{ card.nutrition.nutrients[0].unit }}
 			</div>
-			<button class="card__button">
+			<button
+				class="card__button"
+				@click.stop="clickPlus"
+			>
 				<img
 					src="../assets/images/plus.svg"
 					alt="plus"
@@ -55,6 +58,9 @@ export default {
 	methods: {
 		clickCard() {
 			this.$emit('click-card', this.card);
+		},
+		clickPlus() {
+			console.log('click button');
 		},
 	},
 };
