@@ -27,6 +27,7 @@
 <script>
 export default {
 	name: 'UiMultipleSelect',
+	emits: ['update-categories'],
 	data() {
 		return {
 			isOpen: false,
@@ -52,6 +53,11 @@ export default {
 			} else {
 				this.selectedCategories.push(option);
 			}
+
+			this.$emit(
+				'update-categories',
+				this.selectedCategories.map((category) => category.value)
+			);
 		},
 	},
 	computed: {

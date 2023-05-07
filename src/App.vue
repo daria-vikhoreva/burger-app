@@ -7,7 +7,10 @@
 			<UiInput v-model="searchValue" />
 
 			<div class="mainpage__select-wrapper">
-				<UiMultipleSelect class="mainpage__select" />
+				<UiMultipleSelect
+					class="mainpage__select"
+					@update-categories="changeSelectedCategories"
+				/>
 			</div>
 
 			<CardList
@@ -56,20 +59,41 @@ export default {
 	data() {
 		return {
 			cards: [],
-			loading: true,
+			loading: false,
 			errored: false,
 			isOpen: false,
 			detailCard: {},
 			searchValue: '',
+			selectedQueries: [],
 		};
 	},
 	created() {
+		const localCards = localStorage.getItem('cards');
+
+		if (localCards) {
+			this.cards = JSON.parse(localCards);
+			return;
+		}
+
+		this.loading = true;
+		const queries = ['pizza', 'burger', 'sandwich', 'chicken'];
+
+		const requests = queries.map((query) => {
+			return axios.get(
+				`https://api.spoonacular.com/recipes/complexSearch?apiKey=fd1ee00df7e644cf970befb05422538d&addRecipeNutrition=true&number=20&query=${query}`
+			);
+		});
+
 		axios
-			.get(
-				'https://api.spoonacular.com/recipes/complexSearch?apiKey=d635120e94d84e19a0b28560f4f85391&query=burger&addRecipeNutrition=true'
-			)
-			.then((response) => {
-				this.cards = response.data.results;
+			.all(requests)
+			.then((responses) => {
+				const data = [];
+
+				for (const response of responses) {
+					data.push(...response.data.results);
+				}
+				this.cards = data;
+				localStorage.setItem('cards', JSON.stringify(data));
 			})
 			.catch((error) => {
 				console.log(error);
@@ -86,13 +110,27 @@ export default {
 			this.isOpen = false;
 			this.detailCard = {};
 		},
+		changeSelectedCategories(selected) {
+			this.selectedQueries = selected;
+		},
 	},
 	computed: {
 		getFilteredCards() {
-			return this.cards.filter((item) =>
-				item.title
-					.toLowerCase()
-					.includes(this.searchValue.toLowerCase())
+			return this.cards.filter(
+				(card) =>
+					// 1 вариант: если title содержит строку поиска && title содержит одну из выбранных категорий
+					// ||
+					// 2 вариант: если title содержит строку поиска && категории не выбраны 
+					(card.title
+						.toLowerCase()
+						.includes(this.searchValue.toLowerCase()) &&
+						this.selectedQueries.some((query) =>
+							card.title.toLowerCase().includes(query)
+						)) ||
+					(card.title
+						.toLowerCase()
+						.includes(this.searchValue.toLowerCase()) &&
+						!this.selectedQueries.length)
 			);
 		},
 	},
