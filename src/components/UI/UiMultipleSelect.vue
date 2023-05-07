@@ -1,5 +1,8 @@
 <template>
-	<div class="select">
+	<div
+		class="select"
+		v-click-out-side="closeSelect"
+	>
 		<div
 			class="select__placeholder"
 			@click="clickSelect"
@@ -25,9 +28,14 @@
 </template>
 
 <script>
+import clickOutSide from '@mahdikhashan/vue3-click-outside';
+
 export default {
 	name: 'UiMultipleSelect',
 	emits: ['update-categories'],
+	directives: {
+		clickOutSide,
+	},
 	data() {
 		return {
 			isOpen: false,
@@ -44,6 +52,9 @@ export default {
 	methods: {
 		clickSelect() {
 			this.isOpen = !this.isOpen;
+		},
+		closeSelect() {
+			this.isOpen = false;
 		},
 		clickOption(option) {
 			if (this.selectedCategories.includes(option)) {
