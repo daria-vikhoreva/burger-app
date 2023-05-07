@@ -1,39 +1,74 @@
 <template>
     <div class="wrapper">
-        <div class="mainpage">
+        <div 
+        v-if="!isOpen"
+        class="mainpage">
             <UiInput/>
+
             <div class="mainpage__select-wrapper">
                 <UiMultipleSelect class="mainpage__select"/>
             </div>
-            <CardList/>
+
+            <CardList :cards="cards"/>
         </div>
-        <div class="detail-recipe">
+
+        <div 
+        v-if="isOpen"
+        class="detail-recipe">
             <DetailCard/>
+        </div>
+
+        <div
+        v-if="loading"
+        class="loader">
+            <UiLoader/>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 import UiInput from './components/UI/UiInput.vue';
 import UiMultipleSelect from './components/UI/UiMultipleSelect.vue';
 import CardList from './components/CardList.vue';
-
 import DetailCard from './components/DetailCard.vue';
+import UiLoader from './components/UI/UiLoader.vue';
 
 export default {
-  name: 'App',
-  components: {
-    UiInput,
-    UiMultipleSelect,
-    CardList,
-
-    DetailCard
-  }
+    name: 'App',
+    components: {
+        UiInput,
+        UiMultipleSelect,
+        CardList,
+        DetailCard,
+        UiLoader
+    },
+    data() {
+        return {
+            cards: [],
+            loading: true,
+            errored: false,
+            isOpen: false,
+            currCard: null
+        }
+    }, 
+    created() {
+        axios
+        .get('https://api.spoonacular.com/food/menuItems/search?apiKey=e78935cd64e44fceb543a63594c6ee5e&query=burger')
+        .then(response => {
+            this.cards = response.data.menuItems;
+        })
+        .catch(error => {
+            console.log(error);
+            this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    }
 }
 </script>
 
 <style>
-
 @font-face {
   font-family: "Avenir";
   src: local("Avenir"),  
@@ -61,9 +96,10 @@ export default {
   font-weight: 400;
   max-width: 375px;
   width: 100%;
+  min-height: 785px;
+  height: 100%;
   margin: 0 auto;
   padding: 24px 24px 0 24px;
-  
 }
 
 * {
@@ -94,5 +130,9 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.loader {
+    margin: 0 auto;
 }
 </style>

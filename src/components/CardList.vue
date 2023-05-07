@@ -1,12 +1,9 @@
 <template>
-    <div>
-        <div class="card-list">
-            <CardItem/>
-            <CardItem/>
-            <CardItem/>
-            <CardItem/>
-            <CardItem/>
-            <CardItem/>
+    <div class="card-list">
+        <div
+        v-for="card in cards"
+        :key="card.id">
+            <CardItem :card="card"/>
         </div>
     </div>
 </template>
@@ -16,8 +13,9 @@ import CardItem from './CardItem.vue';
 
     export default {
         name: 'CardList',
+        props: ['cards'],
         components: {
-            CardItem,
+            CardItem
         }
     }
 </script>

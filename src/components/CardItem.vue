@@ -1,15 +1,20 @@
 <template>
-    <div class="card">
+    <div 
+    class="card">
         <div class="card__rating rating">
             <img src="../assets/images/star.svg" alt="star" class="rating__img">
-            3.8</div>
-        <div class="card__img">
-            <img src="../assets/images/burger_1.svg" alt="burger">
+            3.8
         </div>
-        <div class="card__title">Chicken burger</div>
-        <div class="card__descr">100 gr chicken + tomato + cheese  Lettuce</div>
-        <div class="card__info">
-            <div class="card__info-kcal">
+
+        <div class="card__img">
+            <img :src="card.image" alt="burger">
+        </div>
+
+        <div class="card__title">{{ card.title }}</div>
+        <div class="card__descr"> Ресторан: {{ card.restaurantChain }}</div>
+
+        <div class="card__bottom">
+            <div class="card__kcal">
                 300 kcal
             </div>
             <button class="card__button">
@@ -21,19 +26,22 @@
 
 <script>
     export default {
-        name: 'CardItem'
+        name: 'CardItem',
+        props: ['card'],
     }
 </script>
 
 <style scoped>
 .card {
     max-width: 155px;
-    height: 209px;
+    max-height: 312px;
+    height: 100%;
     padding: 8px 12px;
     box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.12);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 .card__rating {
@@ -46,12 +54,21 @@
 .card__img {
     margin: 0 auto;
     margin-bottom: 9px;
+    height: 150px;
+    display: flex;
 }
 
+.card__img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
 .card__title {
     font-size: 17px;
     font-weight: 300;
     margin-bottom: 8px;
+    overflow: hidden;
+    height: 45px;
 }
 
 .card__descr {
@@ -59,14 +76,14 @@
     margin-bottom: 6px;
 }
 
-.card__info {
+.card__bottom {
     display: flex;
     gap: 49px;
     justify-content: center;
     align-items: center;
 }
 
-.card__info-kcal {
+.card__kcal {
     font-size: 14px;
     font-weight: 700;
     color: #FF0000;
