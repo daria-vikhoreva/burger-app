@@ -25,27 +25,16 @@
 		>
 			{{ card.title }}
 		</div>
+
 		<div
-			:title="card.dishTypes.join(', ')"
+			:title="getDishTypes"
 			class="card__descr"
 		>
-			{{ card.dishTypes.join(', ') }}
+			{{ getDishTypes }}
 		</div>
 
-		<div class="card__bottom">
-			<div class="card__kcal">
-				{{ Math.round(card.nutrition.nutrients[0].amount) }}
-				{{ card.nutrition.nutrients[0].unit }}
-			</div>
-			<button
-				class="card__button"
-				@click.stop="clickPlus"
-			>
-				<img
-					src="../assets/images/plus.svg"
-					alt="plus"
-				/>
-			</button>
+		<div class="card__kcal">
+			{{ getKcal }}
 		</div>
 	</div>
 </template>
@@ -59,8 +48,15 @@ export default {
 		clickCard() {
 			this.$emit('click-card', this.card);
 		},
-		clickPlus() {
-			console.log('click button');
+	},
+	computed: {
+		getKcal() {
+			return (
+				Math.round(this.card.nutrition.nutrients[0].amount) + ' kcal'
+			);
+		},
+		getDishTypes() {
+			return this.card.dishTypes.join(', ');
 		},
 	},
 };
@@ -120,28 +116,11 @@ export default {
 	overflow: hidden;
 }
 
-.card__bottom {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-}
-
 .card__kcal {
 	font-size: 14px;
 	font-weight: 700;
 	color: #ff0000;
 	letter-spacing: 0.3px;
 	word-spacing: -1px;
-}
-
-.card__button {
-	width: 24px;
-	height: 24px;
-	border-radius: 50%;
-	background-color: #ff0000;
-	border: none;
-	cursor: pointer;
-	display: flex;
-	padding: 6px;
 }
 </style>
