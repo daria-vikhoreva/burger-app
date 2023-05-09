@@ -11,12 +11,6 @@
 				/>
 			</div>
 			<div class="detail-card__info">
-				<div class="detail-card__scroll-tool">
-					<img
-						src="../assets/images/scroll_tool.svg"
-						alt="scroll"
-					/>
-				</div>
 				<div class="detail-card__title">
 					{{ card.title }}
 				</div>
@@ -55,7 +49,7 @@ export default {
 
 <style scoped>
 .detail-card {
-	background-color: rgba(237, 237, 237, 0.74);
+	background-color: #ffe1e197;
 }
 .detail-card__img {
 	height: 312px;
@@ -66,19 +60,13 @@ export default {
 	padding-left: 19px;
 }
 .detail-card__info {
-	padding: 19.5px 34px 15px 34px;
+	padding: 30px 34px 15px 34px;
 	background: #ffffff;
 	border-top-left-radius: 14px;
 	border-top-right-radius: 14px;
 	margin-top: -50px;
 	z-index: 4;
 	position: relative;
-}
-.detail-card__scroll-tool {
-	display: flex;
-	justify-content: center;
-	margin-bottom: 24.5px;
-	cursor: pointer;
 }
 .detail-card__title {
 	font-weight: 500;
